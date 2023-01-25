@@ -14,22 +14,8 @@ mysql> desc faculty_data;
 +----------+-------------+------+-----+---------+-------+
 7 rows in set (0.01 sec)
 
-mysql> select * faculty_data;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'faculty_data' at line 1
-mysql> insert into faculty_data values(12, "priya", "f", 25, 25, 5655656, "IT");
-Query OK, 1 row affected (0.00 sec)
-
-mysql> insert into faculty_data values(12, "aarthi", "f", 25, 25, 5655656, "IT");
-Query OK, 1 row affected (0.00 sec)
-
-mysql> insert into faculty_data values(15, "riya", "f", 15, 04, 5655656, "IT");
-Query OK, 1 row affected (0.00 sec)
-
-mysql> insert into faculty_data values(11, "jOyce", "f", 11, 16, 5655656, "AI");
-Query OK, 1 row affected (0.00 sec)
-
-mysql> select * from faclty_data;
-ERROR 1146 (42S02): Table 'faculty_data.faclty_data' doesn't exist
+mysql> select * from faaculty_data;
+ERROR 1146 (42S02): Table 'faculty_data.faaculty_data' doesn't exist
 mysql> select * from faculty_data;
 +-------+---------+--------+------+------+----------+--------+
 | FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
@@ -41,17 +27,8 @@ mysql> select * from faculty_data;
 +-------+---------+--------+------+------+----------+--------+
 4 rows in set (0.00 sec)
 
-mysql> select * from faculty_data WHERE DOB BETWEEN 10 AND 25;
-+-------+---------+--------+------+------+----------+--------+
-| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
-+-------+---------+--------+------+------+----------+--------+
-|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
-|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
-|    15 | riya    | f      |   15 |    4 |  5655656 | IT     |
-|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
-+-------+---------+--------+------+------+----------+--------+
-4 rows in set (0.00 sec)
-
+mysql> select * from faculty_data WHERE DOB BETWEEN 10 ABD 15;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ABD 15' at line 1
 mysql> select * from faculty_data WHERE DOB BETWEEN 10 AND 15;
 +-------+---------+--------+------+------+----------+--------+
 | FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
@@ -59,3 +36,41 @@ mysql> select * from faculty_data WHERE DOB BETWEEN 10 AND 15;
 |    15 | riya    | f      |   15 |    4 |  5655656 | IT     |
 |    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
 +-------+---------+--------+------+------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM faculty_data WHERE CONDITION GROUP BY (FacNo)
+    -> ORDER BY (FacNo);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONDITION GROUP BY (FacNo)
+ORDER BY (FacNo)' at line 1
+mysql> SELECT * FROM faculty_data GROUP BY FacName;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
+|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
+|    15 | riya    | f      |   15 |    4 |  5655656 | IT     |
++-------+---------+--------+------+------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from faculty_data ORDER BY FacNo;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
+|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
+|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
+|    15 | riya    | f      |   15 |    4 |  5655656 | IT     |
++-------+---------+--------+------+------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from faculty_data HAVING COUNT (FacNo);
+ERROR 1630 (42000): FUNCTION faculty_data.COUNT does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select * from faculty_data HAVING DOB < 25;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    15 | riya    | f      |   15 |    4 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
++-------+---------+--------+------+------+----------+--------+
+2 rows in set (0.00 sec)
