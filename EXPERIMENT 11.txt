@@ -1,0 +1,253 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 34
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+mysql> CREATE DATABASE FACULTY;
+ERROR 1007 (HY000): Can't create database 'faculty'; database exists
+mysql> CREATE DATABASE FACULTY_DATAS;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE FACULTY_DATAS;
+Database changed
+mysql> CREATE TABLE FACULTY_DATAS (ID int(10),Name varchar(15), qualificatioin varchar(20), salary int(8));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc faculty_datas;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| ID             | int(10)     | YES  |     | NULL    |       |
+| Name           | varchar(15) | YES  |     | NULL    |       |
+| qualificatioin | varchar(20) | YES  |     | NULL    |       |
+| salary         | int(8)      | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into faculty_datas values(101,"JOYCE","FASHION DESIGNER");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into faculty_datas values(101,"JOYCE","FASHION DESIGNER",100000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into faculty_datas values(103,"RAM","AC MECHANIC",10000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into faculty_datas values(156,"PRIYA","MBBS",300000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into faculty_datas values(152,"RAJ","POLICE_DEPT",50000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into faculty_datas values(136,"MARY","ENGINERRING",80000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM FACULTY_DATAS;
++------+-------+------------------+--------+
+| ID   | Name  | qualificatioin   | salary |
++------+-------+------------------+--------+
+|  101 | JOYCE | FASHION DESIGNER | 100000 |
+|  103 | RAM   | AC MECHANIC      |  10000 |
+|  156 | PRIYA | MBBS             | 300000 |
+|  152 | RAJ   | POLICE_DEPT      |  50000 |
+|  136 | MARY  | ENGINERRING      |  80000 |
++------+-------+------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE FACULTY_DATAS SET NAME="RAJESH" WHERE QUALIFICATION="MBBS";
+ERROR 1054 (42S22): Unknown column 'QUALIFICATION' in 'where clause'
+mysql> UPDATE FACULTY_DATAS SET NAME="RAJESH" WHERE qualificatioin="MBBS";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from faculty_datas;
++------+--------+------------------+--------+
+| ID   | Name   | qualificatioin   | salary |
++------+--------+------------------+--------+
+|  101 | JOYCE  | FASHION DESIGNER | 100000 |
+|  103 | RAM    | AC MECHANIC      |  10000 |
+|  156 | RAJESH | MBBS             | 300000 |
+|  152 | RAJ    | POLICE_DEPT      |  50000 |
+|  136 | MARY   | ENGINERRING      |  80000 |
++------+--------+------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select qualificatioin,age,
+    -> case
+    -> ;when
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+    -> select qualificatioin,salary
+    -> case
+    -> when salary>50000 then "BONUS 20%"
+    -> WHEN SALARY=80000 THEN "BONUS 10%"
+    -> ELSE "BONUS 5%"
+    -> END AS BONUS
+    -> FROM FACULTY_DATAS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'when
+select qualificatioin,salary
+case
+when salary>50000 then "BONUS 20%"
+WHEN ' at line 1
+mysql> when salary=80000 then "BONUS 10%"
+    ->
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'when salary=80000 then "BONUS 10%"' at line 1
+mysql> select qualificatioin,salary
+    ->     -> case
+    ->     -> when salary>50000 then "BONUS 20%"
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '> case
+    -> when salary>50000 then "BONUS 20%"' at line 2
+mysql> use patients;
+ERROR 1049 (42000): Unknown database 'patients'
+mysql> use patient;
+ERROR 1049 (42000): Unknown database 'patient'
+mysql> use hospital;
+Database changed
+mysql> desc hospital;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ID    | int(9)      | NO   | PRI | 0       |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> use faculty_datas;
+Database changed
+mysql> desc faculty_datas;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| ID             | int(10)     | YES  |     | NULL    |       |
+| Name           | varchar(15) | YES  |     | NULL    |       |
+| qualificatioin | varchar(20) | YES  |     | NULL    |       |
+| salary         | int(8)      | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select qualificatioin,salary,
+    -> case
+    -> when salary>80000 then 'BONUS 20'
+    -> when salary=100000 then 'BONUS 25'
+    -> else 'BONUS 30'
+    -> end as qualificatioin
+    -> from faculty_datas;
++------------------+--------+----------------+
+| qualificatioin   | salary | qualificatioin |
++------------------+--------+----------------+
+| FASHION DESIGNER | 100000 | BONUS 20       |
+| AC MECHANIC      |  10000 | BONUS 30       |
+| MBBS             | 300000 | BONUS 20       |
+| POLICE_DEPT      |  50000 | BONUS 30       |
+| ENGINERRING      |  80000 | BONUS 30       |
++------------------+--------+----------------+
+5 rows in set (0.04 sec)
+
+mysql> select if(500<1000, "yes","no");
++--------------------------+
+| if(500<1000, "yes","no") |
++--------------------------+
+| yes                      |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> delimiter //
+mysql> CREATE procedure proc()
+    -> begin
+    -> BEGIN
+    -> DECLARE val INT default 20;
+    -> DECLARE res VARCHAR(300) default '';
+    -> label: LOOP
+    -> IF VAL < 0 THEN
+    -> LEAVE LABEL;
+    -> END IF;
+    -> SET res = CONCAT(res, val, ',');
+    -> SET val = vAL -1;
+    -> SET val = val -1;
+    -> ITERATE LABEL;
+    -> END LOOP;
+    -> SELECT res;
+    -> END//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 16
+mysql> END//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE procedure proc()
+    ->     -> BEGIN
+    ->     ->    DECLARE val INT default 15;
+    ->     ->    DECLARE res VARCHAR(255) default '';
+    ->     ->    label: LOOP
+    ->     ->       IF val < 0 THEN
+    ->     ->          LEAVE label;
+    ->     ->       END IF;
+    ->     ->       SET res = CONCAT(res, val, ',');
+    ->     ->       SET val = val -1;
+    ->     ->       ITERATE label;
+    ->     ->    END LOOP;
+    ->     ->    SELECT res;
+    ->     -> END//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> BEGIN
+    ->    DECLARE val INT default 15;
+    ->    DECLARE res VARCHAR(255' at line 2
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> delimiter //
+mysql> CREATE procedure proc()
+    -> BEGIN
+    ->    DECLARE val INT default 15;
+    ->    DECLARE res VARCHAR(255) default '';
+    ->    label: LOOP
+    ->       IF val < 0 THEN
+    ->          LEAVE label;
+    ->       END IF;
+    ->       SET res = CONCAT(res, val, ',');
+    ->       SET val = val -1;
+    ->       ITERATE label;
+    ->    END LOOP;
+    ->    SELECT res;
+    -> END//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call proc//
++----------------------------------------+
+| res                                    |
++----------------------------------------+
+| 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0, |
++----------------------------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER //
+mysql> CREATE FUNCTION sample (bonus INT)
+    ->    RETURNS INT
+    ->    BEGIN
+    ->       DECLARE income INT;
+    ->       SET income = 0;
+    ->       myLabel: LOOP
+    ->           SET income = 0;
+    ->           SET income = income + bonus;
+    ->           IF income < 10000 THEN
+    ->              ITERATE myLabel;
+    ->           END IF;
+    ->           LEAVE myLabel;
+    ->        END LOOP myLabel;
+    ->     RETURN income;
+    -> END; //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT sample(5000);

@@ -1,0 +1,120 @@
+mysql> CREATE DATABASE GENERAL_HOSPITAL;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE GENERAL_HOSPITAL;
+Database changed
+mysql> CREATE TABLE DOCTORS(DOCTORID int(7), doctorname varchar(15), specialist varchar(15), handlingpatientno int(25);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> CREATE TABLE DOCTORS(DOCTORID int(7), doctorname varchar(15), specialist varchar(15), handlingpatientno int(25));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc doctor;
+ERROR 1146 (42S02): Table 'general_hospital.doctor' doesn't exist
+mysql> desc doctors;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| DOCTORID          | int(7)      | YES  |     | NULL    |       |
+| doctorname        | varchar(15) | YES  |     | NULL    |       |
+| specialist        | varchar(15) | YES  |     | NULL    |       |
+| handlingpatientno | int(25)     | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table doctors add primary key (doctorid);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> dsec doctors;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsec doctors' at line 1
+mysql> desc doctors;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| DOCTORID          | int(7)      | NO   | PRI | 0       |       |
+| doctorname        | varchar(15) | YES  |     | NULL    |       |
+| specialist        | varchar(15) | YES  |     | NULL    |       |
+| handlingpatientno | int(25)     | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into doctors values (1563,"simba","cancer",15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into doctors values (1564,"rocky","heart",10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into doctors values (1565,"mary","childspecialist",5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from doctors;
++----------+------------+-----------------+-------------------+
+| DOCTORID | doctorname | specialist      | handlingpatientno |
++----------+------------+-----------------+-------------------+
+|     1563 | simba      | cancer          |                15 |
+|     1564 | rocky      | heart           |                10 |
+|     1565 | mary       | childspecialist |                 5 |
++----------+------------+-----------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql> create table patient(patientid int(7), patientname varchar(15), issue varchar(15), bill int(7));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table patient add foreign key (patientid) references doctors(doctorid);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc patient;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| patientid   | int(7)      | YES  | MUL | NULL    |       |
+| patientname | varchar(15) | YES  |     | NULL    |       |
+| issue       | varchar(15) | YES  |     | NULL    |       |
+| bill        | int(7)      | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into patient values(2536,"kamala","heart",70000);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`general_hospital`.`patient`, CONSTRAINT `patient_ibfk_1` FOREIGN KEY (`patientid`) REFERENCES `doctors` (`DOCTORID`))
+mysql> insert into patient values(2536,"kamala","heart",70000);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`general_hospital`.`patient`, CONSTRAINT `patient_ibfk_1` FOREIGN KEY (`patientid`) REFERENCES `doctors` (`DOCTORID`))
+mysql> alter table patient add foreign key (issue) references doctors(specialist);
+ERROR 1005 (HY000): Can't create table 'general_hospital.#sql-fbc_21' (errno: 150)
+mysql> insert into patient values(1564,"kamala","heart",70000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into patient values(1565,"kaviya","childspecialist",7000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into patient values(1564,"faziya","heart",90000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from patient;
++-----------+-------------+-----------------+-------+
+| patientid | patientname | issue           | bill  |
++-----------+-------------+-----------------+-------+
+|      1564 | kamala      | heart           | 70000 |
+|      1565 | kaviya      | childspecialist |  7000 |
+|      1564 | faziya      | heart           | 90000 |
++-----------+-------------+-----------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from patient order by bill;
++-----------+-------------+-----------------+-------+
+| patientid | patientname | issue           | bill  |
++-----------+-------------+-----------------+-------+
+|      1565 | kaviya      | childspecialist |  7000 |
+|      1564 | kamala      | heart           | 70000 |
+|      1564 | faziya      | heart           | 90000 |
++-----------+-------------+-----------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PATIENT WHERE ISSUE="HEART";
++-----------+-------------+-------+-------+
+| patientid | patientname | issue | bill  |
++-----------+-------------+-------+-------+
+|      1564 | kamala      | heart | 70000 |
+|      1564 | faziya      | heart | 90000 |
++-----------+-------------+-------+-------+
+2 rows in set (0.00 sec)

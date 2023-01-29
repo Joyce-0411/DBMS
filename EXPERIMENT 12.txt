@@ -1,0 +1,168 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE faculty_data;
+Database changed
+mysql> DELIMITER $$
+mysql> CREATE PROCEDURE GeekLoop()
+    ->  BEGIN
+    -> DECLARE no INT;
+    ->   SET no = 0;
+    ->   loop: LOOP
+    ->     SET no = no +1;
+    ->     select no ;
+    ->     IF no = 5 THEN
+    ->      LEAVE loop;
+    ->     END IF;
+    -> END LOOP loop;
+    -> SELECT no;
+    -> END $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ': LOOP
+    SET no = no +1;
+    select no ;
+    IF no = 5 THEN
+     LEAVE loop;
+ ' at line 5
+mysql> DELIMITER ;
+mysql> call geekloop();
+ERROR 1305 (42000): PROCEDURE faculty_data.geekloop does not exist
+mysql> Call geekloop();
+ERROR 1305 (42000): PROCEDURE faculty_data.geekloop does not exist
+mysql>
+mysql>
+mysql>
+mysql> USE Student;
+Database changed
+mysql> desc student;
+ERROR 1146 (42S02): Table 'student.student' doesn't exist
+mysql> desc Student;
+ERROR 1146 (42S02): Table 'student.student' doesn't exist
+mysql> USE FACULTY_DATAS;
+Database changed
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE RepeatExample()
+    -> BEGIN
+    ->    DECLARE val INT;
+    ->    DECLARE squares INT;
+    ->    DECLARE res VARCHAR(100);
+    ->    SET val=1;
+    ->    SET squares=1;
+    ->    SET res = '';
+    ->    REPEAT
+    ->       SET squares = val*val;
+    ->       SET res = CONCAT(res, squares,',');
+    ->       SET val = val + 1;
+    ->    UNTIL val >= 10
+    ->    END REPEAT;
+    ->    SELECT res;
+    -> END//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER;
+    -> CALL RepeatExample; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELIMITER;CALL RepeatExample' at line 1
+mysql> CALL RepeatExample;
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> ;
+    -> ;
+    ->
+    ->
+    -> cgfg;
+    -> DELIMITER;
+    -> CALL RepeatExample; //
++--------------------------+
+| res                      |
++--------------------------+
+| 1,4,9,16,25,36,49,64,81, |
++--------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ';
+;
+
+
+cgfg;
+DELIMITER;CALL RepeatExample' at line 1
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE while_loop()
+    ->    BEGIN
+    ->       DECLARE num INT default 1;
+    ->       DECLARE res varchar(50) default '';
+    ->       WHILE num < 78125 DO
+    ->          SET res = CONCAT(res,num,',');
+    ->          SET num = num*5;
+    ->       END While;
+    ->       SELECT res;
+    ->    END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call while_loop;
+    ->
+    -> Call while_loop;
+    -> call while_loop;
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> CALL WHILE_LOOP;
+    -> CALL WHILE_LOOP://
++----------------------------+
+| res                        |
++----------------------------+
+| 1,5,25,125,625,3125,15625, |
++----------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
++----------------------------+
+| res                        |
++----------------------------+
+| 1,5,25,125,625,3125,15625, |
++----------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
++----------------------------+
+| res                        |
++----------------------------+
+| 1,5,25,125,625,3125,15625, |
++----------------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
++----------------------------+
+| res                        |
++----------------------------+
+| 1,5,25,125,625,3125,15625, |
++----------------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql>

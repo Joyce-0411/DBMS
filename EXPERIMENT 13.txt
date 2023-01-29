@@ -1,0 +1,120 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE faculty_data;
+Database changed
+mysql> desc faculty_data;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| FacNo    | int(3)      | YES  |     | NULL    |       |
+| FacName  | varchar(15) | YES  |     | NULL    |       |
+| Gender   | varchar(1)  | YES  |     | NULL    |       |
+| DOB      | int(11)     | YES  |     | NULL    |       |
+| DOJ      | int(10)     | YES  |     | NULL    |       |
+| MobileNO | int(10)     | YES  |     | NULL    |       |
+| DeptNo   | varchar(4)  | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> select * from faculty-data;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-data' at line 1
+mysql> select * from faculty_data;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
+|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
+|    15 | riya    | f      |   15 |    4 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
+|    14 | Darshan | m      |    4 |   26 |  2536985 | AI     |
++-------+---------+--------+------+------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Delete from faculty_data where FacNO = 15;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM faculty_data;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
+|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
+|    14 | Darshan | m      |    4 |   26 |  2536985 | AI     |
++-------+---------+--------+------+------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM faculty_data;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
+|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
+|    14 | Darshan | m      |    4 |   26 |  2536985 | AI     |
++-------+---------+--------+------+------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM faculty_data;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    12 | priya   | f      |   25 |   25 |  5655656 | IT     |
+|    12 | aarthi  | f      |   25 |   25 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   16 |  5655656 | AI     |
+|    14 | Darshan | m      |    4 |   26 |  2536985 | AI     |
++-------+---------+--------+------+------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE faculty_data SET DOJ = DOJ + 1;
+Query OK, 4 rows affected (0.00 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> SAVEPOINT samplesavepoint;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO faculty_data values(10,"lali","f",26,10,4543465456,"AI");
+ERROR 1264 (22003): Out of range value for column 'MobileNO' at row 1
+mysql> INSERT INTO faculty_data values(10,"lali","f",26,10,454346,"AI");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> ROLLBACK TO SAVEPOINT sample savepoint;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'savepoint' at line 1
+mysql> ROLLBACK TO SAVEPOINT samplesavepoint;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM faculty_data;
++-------+---------+--------+------+------+----------+--------+
+| FacNo | FacName | Gender | DOB  | DOJ  | MobileNO | DeptNo |
++-------+---------+--------+------+------+----------+--------+
+|    12 | priya   | f      |   25 |   26 |  5655656 | IT     |
+|    12 | aarthi  | f      |   25 |   26 |  5655656 | IT     |
+|    11 | jOyce   | f      |   11 |   17 |  5655656 | AI     |
+|    14 | Darshan | m      |    4 |   27 |  2536985 | AI     |
++-------+---------+--------+------+------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql>

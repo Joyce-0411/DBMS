@@ -1,0 +1,86 @@
+mysql> USE CAR_RENTAL_COM_PANTL
+ERROR 1049 (42000): Unknown database 'car_rental_com_pantl'
+mysql> USE CAR_RENTAL_COM_PANY;
+Database changed
+mysql> SHOW TABLES;
++-------------------------------+
+| Tables_in_car_rental_com_pany |
++-------------------------------+
+| car                           |
+| customer                      |
++-------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> DESC CAR;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| carno          | int(5)      | NO   | PRI | 0       |       |
+| carname        | varchar(10) | YES  |     | NULL    |       |
+| seatallocation | int(7)      | YES  |     | NULL    |       |
+| rentamount     | int(10)     | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> DESC CUSTOMER;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| customerid   | int(5)      | YES  | MUL | NULL    |       |
+| cuatomername | varchar(15) | YES  |     | NULL    |       |
+| rentalcar    | varchar(10) | YES  |     | NULL    |       |
+| rentamount   | int(10)     | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM CAR;
++-------+------------+----------------+------------+
+| carno | carname    | seatallocation | rentamount |
++-------+------------+----------------+------------+
+|  1562 | BMW        |              5 |      10000 |
+|  1563 | ROLLSROYCE |              5 |      50000 |
+|  1589 | indico     |              5 |       1000 |
+|  2562 | INOVA      |              7 |       5000 |
++-------+------------+----------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CUSTOMER;
++------------+--------------+------------+------------+
+| customerid | cuatomername | rentalcar  | rentamount |
++------------+--------------+------------+------------+
+|       1563 | Joyce        | ROLLSROYCE |      50000 |
+|       1563 | RANI         | ROLLSROYCE |      50000 |
+|       2562 | PRIYA        | INOVA      |       5000 |
+|       1562 | LILLY        | BMW        |      10000 |
++------------+--------------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CAR WHERE RENTAMOUNT 5000 AND 10000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '5000 AND 10000' at line 1
+mysql> SELECT * FROM CAR WHERE RENTAMOUNT BETWEEN 5000 AND 10000;
++-------+---------+----------------+------------+
+| carno | carname | seatallocation | rentamount |
++-------+---------+----------------+------------+
+|  1562 | BMW     |              5 |      10000 |
+|  2562 | INOVA   |              7 |       5000 |
++-------+---------+----------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CUSTOMER WHERE RENTAMOUNT 5000 AND 10000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '5000 AND 10000' at line 1
+mysql> SELECT * FROM CUSTOMER WHERE RENTAMOUNT BETWEEN 5000 AND 10000;
++------------+--------------+-----------+------------+
+| customerid | cuatomername | rentalcar | rentamount |
++------------+--------------+-----------+------------+
+|       2562 | PRIYA        | INOVA     |       5000 |
+|       1562 | LILLY        | BMW       |      10000 |
++------------+--------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CUSTOMER WHERE RENTALCAR = "ROLLSROYCE";
++------------+--------------+------------+------------+
+| customerid | cuatomername | rentalcar  | rentamount |
++------------+--------------+------------+------------+
+|       1563 | Joyce        | ROLLSROYCE |      50000 |
+|       1563 | RANI         | ROLLSROYCE |      50000 |
++------------+--------------+------------+------------+

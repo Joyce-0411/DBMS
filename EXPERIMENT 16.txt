@@ -1,0 +1,12 @@
+mysql> create function hello()
+    -> returns varchar(20) DETERMINISTIC
+    -> RETURN "Hello World";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select hello();
++-------------+
+| hello()     |
++-------------+
+| Hello World |
++-------------+
+1 row in set (0.00 sec)

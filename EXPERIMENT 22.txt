@@ -1,0 +1,162 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE book_publishing_company;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use book_publishing_company;
+Database changed
+mysql> create table book(bookno int(5), bookname varchar(15), genre varchar(15));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc book;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| bookno   | int(5)      | YES  |     | NULL    |       |
+| bookname | varchar(15) | YES  |     | NULL    |       |
+| genre    | varchar(15) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> alter table book add primary key(bookno);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into book values(101,"jatakatales","moralstories");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book values(563,"romeojuliet","romance");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book values(661,"thewar","thriller");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from book;
++--------+-------------+--------------+
+| bookno | bookname    | genre        |
++--------+-------------+--------------+
+|    101 | jatakatales | moralstories |
+|    563 | romeojuliet | romance      |
+|    661 | thewar      | thriller     |
++--------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> desc book;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| bookno   | int(5)      | NO   | PRI | 0       |       |
+| bookname | varchar(15) | YES  |     | NULL    |       |
+| genre    | varchar(15) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from book order by (bookno);
++--------+-------------+--------------+
+| bookno | bookname    | genre        |
++--------+-------------+--------------+
+|    101 | jatakatales | moralstories |
+|    563 | romeojuliet | romance      |
+|    661 | thewar      | thriller     |
++--------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from book order by (bookname);
++--------+-------------+--------------+
+| bookno | bookname    | genre        |
++--------+-------------+--------------+
+|    101 | jatakatales | moralstories |
+|    563 | romeojuliet | romance      |
+|    661 | thewar      | thriller     |
++--------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from book where genre="romance";
++--------+-------------+---------+
+| bookno | bookname    | genre   |
++--------+-------------+---------+
+|    563 | romeojuliet | romance |
++--------+-------------+---------+
+1 row in set (0.00 sec)
+
+mysql> create table store (customername varchar(15), bookname varchar(15), price int(7);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table store (customername varchar(15), bookname varchar(15), price int(7));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create table store (customerid int(5),customername varchar(15), bookname varchar(15), price int(7));
+ERROR 1050 (42S01): Table 'store' already exists
+mysql> alter table add customerid int(5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add customerid int(5)' at line 1
+mysql> alter table store add customerid int(5);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc store;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| customername | varchar(15) | YES  |     | NULL    |       |
+| bookname     | varchar(15) | YES  |     | NULL    |       |
+| price        | int(7)      | YES  |     | NULL    |       |
+| customerid   | int(5)      | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table store add foreign key (customerid) references book(bookno);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc store;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| customername | varchar(15) | YES  |     | NULL    |       |
+| bookname     | varchar(15) | YES  |     | NULL    |       |
+| price        | int(7)      | YES  |     | NULL    |       |
+| customerid   | int(5)      | YES  | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into store values("joyce","romeojuliet","5000",526);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`book_publishing_company`.`store`, CONSTRAINT `store_ibfk_1` FOREIGN KEY (`customerid`) REFERENCES `book` (`bookno`))
+mysql> insert into store values("joyce","romeojuliet","5000",563);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into store values("DARSHAN","romeojuliet","5000",563);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into store values("JAY","THEWAR","6000",661);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STORE;
++--------------+-------------+-------+------------+
+| customername | bookname    | price | customerid |
++--------------+-------------+-------+------------+
+| joyce        | romeojuliet |  5000 |        563 |
+| DARSHAN      | romeojuliet |  5000 |        563 |
+| JAY          | THEWAR      |  6000 |        661 |
++--------------+-------------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STORE WHERE BOOKNAME="ROMEOJULIET";
++--------------+-------------+-------+------------+
+| customername | bookname    | price | customerid |
++--------------+-------------+-------+------------+
+| joyce        | romeojuliet |  5000 |        563 |
+| DARSHAN      | romeojuliet |  5000 |        563 |
++--------------+-------------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql>

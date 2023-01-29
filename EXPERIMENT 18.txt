@@ -1,0 +1,45 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE FACULTY_DATAS;
+Database changed
+mysql> CREATE TABLE FACULTY_DETAILS(NAME VARCHAR(16), AGE INT(2));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TRIGGER before_insert_facultydetails BEFORE INSERT ON FACULTY_DETAILS FOR EACH ROW
+    -> BEGIN
+    -> IF NEW.AGE < 0 THEN SET NEW.AGE = 0;
+    -> END IF;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO FACULTY_DETAILS(NAME,AGE) VALUES("STEPHAM",45);
+    -> INSERT INTO FACULTY_DETAILS(NAME,AGE) VALUES("STEN",47);
+    -> INSERT INTO FACULTY_DETAILS(NAME,AGE) VALUES("LILY",-2);
+    -> SELECT * FROM FACULTY_DETAILS;
+    -> END//
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
++---------+------+
+| NAME    | AGE  |
++---------+------+
+| STEPHAM |   45 |
+| STEN    |   47 |
+| LILY    |    0 |
++---------+------+
+3 rows in set (0.01 sec)
+

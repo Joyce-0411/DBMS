@@ -1,0 +1,62 @@
+mysql> CREATE DATABASE STUDENT_PROGRESS;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE STUDENT_PROGRESS;
+Database changed
+mysql> CREATE TABLE STUDENT_PROGRESS(STIDENTID INT(5),STUDENTNAME VARCHAR(15), MARKS INT(3), GRADE VARCHAR(1), FEEDBACK VARCHAR(50));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DESC STUDENT_PROGRESS;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| STIDENTID   | int(5)      | YES  |     | NULL    |       |
+| STUDENTNAME | varchar(15) | YES  |     | NULL    |       |
+| MARKS       | int(3)      | YES  |     | NULL    |       |
+| GRADE       | varchar(1)  | YES  |     | NULL    |       |
+| FEEDBACK    | varchar(50) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> ALTER TABLE ADD PRIMARYKEY (STUDENTID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD PRIMARYKEY (STUDENTID)' at line 1
+mysql> ALTER TABLE STUDENT_PROGRESS ADD PRIMARYKEY (STUDENTID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(STUDENTID)' at line 1
+mysql> ALTER TABLE STUDENT_PROGRESS ADD PRIMARYKEY (STIDENTID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(STIDENTID)' at line 1
+mysql> ALTER TABLE STUDENT_PROGRESS ADD PRIMARYKEY (STIDENTID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(STIDENTID)' at line 1
+mysql> ALTER TABLE STUDENT_PROGRESS ADD PRIMARYKEY(STUDENTNAME);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(STUDENTNAME)' at line 1
+mysql> alter table STUDENT_PROGRESS add primary key (studentname);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> dsec student_progress;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsec student_progress' at line 1
+mysql> desc student_progress;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| STIDENTID   | int(5)      | YES  |     | NULL    |       |
+| STUDENTNAME | varchar(15) | NO   | PRI |         |       |
+| MARKS       | int(3)      | YES  |     | NULL    |       |
+| GRADE       | varchar(1)  | YES  |     | NULL    |       |
+| FEEDBACK    | varchar(50) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into student_progress values(15236,"joyce",98,"A","GOOD");
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into student_progress values(15256,"FATHIMA",8,"E","POOR");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUDENT_PROGRESS;
++-----------+-------------+-------+-------+----------+
+| STIDENTID | STUDENTNAME | MARKS | GRADE | FEEDBACK |
++-----------+-------------+-------+-------+----------+
+|     15256 | FATHIMA     |     8 | E     | POOR     |
+|     15236 | joyce       |    98 | A     | GOOD     |
++-----------+-------------+-------+-------+----------+
+2 rows in set (0.00 sec)
